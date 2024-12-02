@@ -1,0 +1,53 @@
+# Node modules
+node_modules/
+
+# Build artifacts
+build/
+artifacts/
+cache/
+
+# Foundry
+out/
+lib/
+
+# Environment variables
+.env
+.env.local
+.env.*
+
+# VS Code settings
+.vscode/
+
+# Truffle-specific files
+truffle-config.js.bak
+truffle-config.js
+
+# Coverage reports
+coverage/
+coverage.json
+lcov-report/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.idea/
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Misc
+*.log
+*.pid
+*.seed
+*.pid.lock
+*.tsbuildinfo
