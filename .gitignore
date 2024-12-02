@@ -20,7 +20,7 @@ lib/
 
 # Truffle-specific files
 truffle-config.js.bak
-truffle-config.js
+truffle-config.json
 
 # Coverage reports
 coverage/
