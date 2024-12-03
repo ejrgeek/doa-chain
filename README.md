@@ -126,8 +126,8 @@ We do not currently accept direct contributions to the project. However, you can
     - [Truffle](https://trufflesuite.com/)
     - [Foundry](https://getfoundry.sh/)
 - dApp Frontend
+    - [NextJS](https://nextjs.org/)
     - [React](https://react.dev/)
-    - [TypeScript](https://www.typescriptlang.org/)
     - [Web3.js](https://www.web3js.org/)
 
 - Developer: *Erlon Dantas da Nobrega Junior*
