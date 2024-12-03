@@ -175,8 +175,7 @@ contract DoaChain {
 
     } 
 
-    function getCampaign(bytes32 id) public returns (Campaign memory){
-        checkActiveCampaign(id);
+    function getCampaign(bytes32 id) public view returns (Campaign memory){
         return campaigns[id];
     }
 
