@@ -15,7 +15,7 @@ body {
 .container {
     background-color: #f3f4f7;
     border-radius: 20px;
-    box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff; /* Efeito de relevo */
+    box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff;
     padding: 30px;
 }
 
@@ -35,7 +35,7 @@ body {
 }
 
 .btn-neuromorphic:active {
-    box-shadow: inset 9px 9px 16px #a3b1c6, inset -9px -9px 16px #ffffff; /* Pressionado */
+    box-shadow: inset 9px 9px 16px #a3b1c6, inset -9px -9px 16px #ffffff;
 }
 
 .btn-donate-neuro {
@@ -55,7 +55,7 @@ body {
 }
 
 .btn-donate-neuro:active {
-    box-shadow: inset 9px 9px 16px #a3b1c6, inset -9px -9px 16px #ffffff; /* Pressionado */
+    box-shadow: inset 9px 9px 16px #a3b1c6, inset -9px -9px 16px #ffffff;
 }
 
 
@@ -76,7 +76,7 @@ body {
 }
 
 .btn-create-neuro:active {
-    box-shadow: inset 9px 9px 16px #dd8c5e, inset -9px -9px 16px #ffffff; /* Pressionado */
+    box-shadow: inset 9px 9px 16px #dd8c5e, inset -9px -9px 16px #ffffff;
 }
 
 .footer-neuromorphic {
