@@ -31,11 +31,52 @@ body {
 }
 
 .btn-neuromorphic:hover {
-    background-color: #e0e3eb
+    background-color: #e0e3eb;
 }
 
 .btn-neuromorphic:active {
     box-shadow: inset 9px 9px 16px #a3b1c6, inset -9px -9px 16px #ffffff; /* Pressionado */
+}
+
+.btn-donate-neuro {
+    width: 86%;
+    background-color: #6fe7ff;
+    border-radius: 30px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    color: #333;
+    border: none;
+    box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff;
+    transition: all 0.2s ease;
+}
+
+.btn-donate-neuro:hover {
+    background-color: #60cfe6
+}
+
+.btn-donate-neuro:active {
+    box-shadow: inset 9px 9px 16px #a3b1c6, inset -9px -9px 16px #ffffff; /* Pressionado */
+}
+
+
+.btn-create-neuro {
+    width: 86%;
+    background-color: #ffa46f;
+    border-radius: 30px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    color: #333;
+    border: none;
+    box-shadow: 9px 9px 16px #dd8c5e, -9px -9px 16px #ffffff;
+    transition: all 0.2s ease;
+}
+
+.btn-create-neuro:hover {
+    background-color: #dd8c5e
+}
+
+.btn-create-neuro:active {
+    box-shadow: inset 9px 9px 16px #dd8c5e, inset -9px -9px 16px #ffffff; /* Pressionado */
 }
 
 .footer-neuromorphic {
