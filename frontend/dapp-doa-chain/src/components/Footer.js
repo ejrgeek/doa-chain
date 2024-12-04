@@ -1,27 +1,22 @@
 export default function Footer(){
     return (
-        <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <footer className="footer-neuromorphic d-flex flex-wrap justify-content-between align-items-center py-3 my-4 container">
             <p className="col-md-6 mb-0 text-body-secondary">
-                &copy; 2024 DoaChain made with ❤️ by Erlon Dantas
+                &copy; {new Date().getFullYear()}&nbsp;
+                 <a href="https://github.com/ejrgeek/doa-chain" target="_blank" className="fw-bold">DoaChain</a>
+                 &nbsp;made with ❤️ by&nbsp;
+                 <a href="https://erlondnjr.com.br/" target="_blank" className="creatorName fw-bold">Erlon Dantas</a>
             </p>
             <ul className="nav col-md-6 justify-content-end">
-                <li className="nav-item" >
-                    <a href="/" className="nav-link px-2 text-body-secondary"> Home </a>
-                </li>
-                <li className="nav-item" >
-                    <a href="/create-campaign" className="nav-link px-2 text-body-secondary"> Create Campaign </a>
-                </li>
-                <li className="nav-item" >
-                    <a href="/donate-campaign" className="nav-link px-2 text-body-secondary"> Donate </a>
-                </li>
+                
                 <li className="nav-item" >
                     <a href="/about" className="nav-link px-2 text-body-secondary"> About </a>
                 </li>
                 <li className="nav-item" >
-                    <a href="https://erlondnjr.com.br/" target="_blank" className="nav-link px-2 text-body-secondary"> Portfolio </a>
+                    <a href="/terms-of-use" className="nav-link px-2 text-body-secondary"> Terms of Use </a>
                 </li>
                 <li className="nav-item" >
-                    <a href="https://www.linkedin.com/in/erlondnjr/" target="_blank" className="nav-link px-2 text-body-secondary"> GitHub </a>
+                    <a href="/privacy-policy" className="nav-link px-2 text-body-secondary"> Privacy Policy </a>
                 </li>
             </ul>
         </footer>

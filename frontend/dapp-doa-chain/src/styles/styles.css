@@ -1,0 +1,55 @@
+body {
+    background-color: #f3f4f7;
+    padding-top: 24px;
+}
+
+.logo {
+    height: 42px;
+    margin-right: 16px;
+    margin-top: 4px;
+    border-radius: 127px;
+    background: #e0e0e0;
+    box-shadow:  9px 9px 25px #aaaaaa, -9px -9px 25px #ffffff;
+}
+
+.container {
+    background-color: #f3f4f7;
+    border-radius: 20px;
+    box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff; /* Efeito de relevo */
+    padding: 30px;
+}
+
+.btn-neuromorphic {
+    background-color: #f3f4f7;
+    border-radius: 30px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    color: #333;
+    border: none;
+    box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff;
+    transition: all 0.2s ease;
+}
+
+.btn-neuromorphic:hover {
+    background-color: #e0e3eb
+}
+
+.btn-neuromorphic:active {
+    box-shadow: inset 9px 9px 16px #a3b1c6, inset -9px -9px 16px #ffffff; /* Pressionado */
+}
+
+.footer-neuromorphic {
+    background-color: #f3f4f7;
+    border-radius: 20px;
+    box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff;
+    padding: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #31D2F2;
+}
+
+.creatorName {
+    color: indigo;
+}
