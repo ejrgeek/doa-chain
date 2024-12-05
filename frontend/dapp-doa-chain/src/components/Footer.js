@@ -1,3 +1,6 @@
+import Link from "next/link";
+
+
 export default function Footer(){
     return (
         <footer className="footer-neuromorphic d-flex flex-wrap justify-content-between align-items-center py-3 my-4 container">
@@ -10,13 +13,13 @@ export default function Footer(){
             <ul className="nav col-md-6 justify-content-end">
                 
                 <li className="nav-item" >
-                    <a href="/about" className="nav-link px-2 text-body-secondary"> About </a>
+                    <Link href="/about" className="nav-link px-2 text-body-secondary">About</Link>
                 </li>
                 <li className="nav-item" >
-                    <a href="/terms-of-use" className="nav-link px-2 text-body-secondary"> Terms of Use </a>
+                    <Link href="/terms-of-use" className="nav-link px-2 text-body-secondary">Terms of Use</Link>
                 </li>
                 <li className="nav-item" >
-                    <a href="/privacy-policy" className="nav-link px-2 text-body-secondary"> Privacy Policy </a>
+                    <Link href="/privacy-policy" className="nav-link px-2 text-body-secondary">Privacy Policy</Link>
                 </li>
             </ul>
         </footer>
