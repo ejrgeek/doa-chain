@@ -3,12 +3,10 @@ import Link from "next/link";
 
 export default function Header(){
     return (
-        <footer className="footer-neuromorphic d-flex flex-wrap justify-content-between align-items-center py-3 mb-4 container">
+        <nav className="footer-neuromorphic d-flex flex-wrap justify-content-between align-items-center py-3 mb-4 container">
             <div className="nav col-md-6 mb-0 ">
                 <img src="logo.png" className="logo"/>
-                <h1 className="text-info fw-bold">
-                    DoaChain
-                </h1>
+                <Link href="/" className="text-info fw-bold h1">DoaChain</Link>
             </div>
             <ul className="nav col-md-6 justify-content-end">
                 <li className="nav-item" >
@@ -24,6 +22,6 @@ export default function Header(){
                     <Link href="/withdraw" className="nav-link px-2 text-body-secondary">Withdraw</Link>
                 </li>
             </ul>
-        </footer>
+        </nav>
     )
 }
