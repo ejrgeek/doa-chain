@@ -167,7 +167,7 @@ contract DoaChain {
     function checkActiveCampaign(bytes32 id) public returns (bool) {      
         require(campaigns[id].startDate != 0);
 
-        if (campaigns[id].active && campaigns[id].endDate >= block.timestamp){
+        if (campaigns[id].active && campaigns[id].endDate <= block.timestamp){
             campaigns[id].active = false;
         }
 
@@ -201,5 +201,14 @@ contract DoaChain {
         return campaignsByAuthor;
     }
 
+    function getLastCampaignIdByAuthor(address authorWallet) public view returns (bytes32) {
+        Campaign memory campaignByAuthor;
+        for (uint256 i = 0; i < campaignIds.length; i++) {
+            if (campaigns[campaignIds[i]].authorWallet == authorWallet){
+                campaignByAuthor = campaigns[campaignIds[i]];
+            }
+        }
+        return campaignByAuthor.id;
+    }
 
 }

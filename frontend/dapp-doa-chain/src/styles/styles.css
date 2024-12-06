@@ -1,6 +1,32 @@
+:root {
+    --bg-color: #e0e0e0;
+    --shadow-dark: #bebebe;
+    --shadow-light: #ffffff;
+    --focus-color: #3498db;
+}
+
 body {
     background-color: #f3f4f7;
     padding-top: 24px;
+}
+
+input, textarea {
+    border: none;
+    border-radius: 10px;
+    background: var(--bg-color);
+    box-shadow: 
+        8px 8px 15px var(--shadow-dark),
+        -8px -8px 15px var(--shadow-light);
+    padding: 10px 15px;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+input, textarea:focus {
+    box-shadow: 
+        5px 5px 10px var(--shadow-dark),
+        0 0 0 2px var(--focus-color);
+    background: lighten(var(--bg-color), 10%);
 }
 
 .logo {
@@ -17,6 +43,16 @@ body {
     border-radius: 20px;
     box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff;
     padding: 30px;
+}
+
+.show-media-neuro {
+    background-color: #f3f4f7;
+    border-radius: 16px;
+    box-shadow: 9px 9px 16px #ffa46f, -9px -9px 16px #ffffff;
+    padding: 8px;
+}
+.show-media-neuro:hover {
+    box-shadow: inset 9px 9px 16px #ffa46f, inset 18px 18px 16px #ffffff;
 }
 
 .btn-neuromorphic {
@@ -77,6 +113,26 @@ body {
 
 .btn-create-neuro:active {
     box-shadow: inset 9px 9px 16px #dd8c5e, inset -9px -9px 16px #ffffff;
+}
+
+
+.btn-neuro {
+    background-color: #6fe7ff;
+    border-radius: 30px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    color: #333;
+    border: none;
+    box-shadow: 9px 9px 16px #6fe7ff, -9px -9px 16px none;
+    transition: all 0.2s ease;
+}
+
+.btn-neuro:hover {
+    background-color: #6fe7ff
+}
+
+.btn-neuro:active {
+    box-shadow: inset 9px 9px 16px #6fe7ff, inset -9px -9px 16px #ffffff;
 }
 
 .footer-neuromorphic {
