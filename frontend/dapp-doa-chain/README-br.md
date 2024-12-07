@@ -5,14 +5,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 # Frontend - dApp DoaChain
 
+### Você pode acessar por aqui: [DoaChain](https://doa-chain.vercel.app/)
+
 Este é o frontend de uma plataforma para criação de campanhas e gerenciamento de doações usando a blockchain. O projeto permite que os usuários criem campanhas, visualizem detalhes sobre campanhas existentes e façam retiradas quando atingirem a meta de arrecadação.
 
 ## Tecnologias Usadas
 - React - Biblioteca JavaScript para construção da interface de usuário.
 - Web3.js - Biblioteca para interação com a blockchain Ethereum (ou Binance Smart Chain).
 - Bootstrap - Framework CSS para layout e design responsivo.
-
-
 
 ## Requisitos
 Antes de começar, você precisa ter as seguintes ferramentas instaladas no seu ambiente de desenvolvimento:
@@ -82,6 +82,7 @@ O sistema exibe mensagens sobre o status da doação, incluindo:
 
 6. Componentes
 
+- CampaignCard: Responsável pela montagem visual das campanhas na listagem
 - HeadNext: Responsável por adicionar metadados e título da página.
 - Header: Componente que exibe a barra de navegação no topo da página.
 - Footer: Exibe o rodapé com informações adicionais.

@@ -5,6 +5,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 # Frontend - dApp DoaChain
 
+### You can access it here: [DoaChain](https://doa-chain.vercel.app/)
+
 This is the frontend of a blockchain-based campaign creation and donation management platform. The project allows users to create campaigns, view details about existing campaigns, and withdraw funds when they reach their fundraising goal.
 
 ## Technologies Used
@@ -79,6 +81,7 @@ The system displays messages about the status of the donation, including:
 
 6. Components
 
+- CampaignCard: Responsible for the visual assembly of campaigns in the listing
 - HeadNext: Responsible for adding metadata and page title.
 - Header: Component that displays the navigation bar at the top of the page.
 - Footer: Displays the footer with additional information.
