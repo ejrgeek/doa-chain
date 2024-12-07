@@ -27,6 +27,11 @@ contract DoaChain {
 
     address payable theCreator;
 
+    event CampaignCreatedEvent(bytes32 id, string title, address authorWallet);
+    event DonationMadeEvent(bytes32 campaignId, address donor, uint256 amount);
+    event FundsWithdrawnEvent(bytes32 campaignId, address authorWallet, uint256 amount);
+    event RefundIssuedEvent(bytes32 campaignId, address donor, uint256 amount);
+
     modifier isTheCreator() {
         require(msg.sender == theCreator, "You are not allowed");
         _;
@@ -95,6 +100,8 @@ contract DoaChain {
 
         campaigns[idCampaign] = newCampaign;
         campaignIds.push(idCampaign);
+
+        emit CampaignCreatedEvent(idCampaign, title, msg.sender);
     }
 
     function donate(bytes32 campaignId) public payable {
@@ -106,30 +113,55 @@ contract DoaChain {
 
         campaignDonors[campaignId].push(msg.sender);
         refundBalances[campaignId][msg.sender] += msg.value;
+
+        emit DonationMadeEvent(campaignId, msg.sender, msg.value);
     }
 
     function returnDonation(bytes32 campaignId) public isTheCreator {
         checkActiveCampaign(campaignId);
         Campaign memory campaign = campaigns[campaignId];
 
-        require(block.timestamp > campaign.endDate, "Campaign in progress");
+        require(block.timestamp > campaign.endDate, "Campaign is still active");
+        
         require(campaign.goalBalance < campaign.totalRaised, "The campaign reached its goal");
 
         for (uint i = 0; i < campaignDonors[campaignId].length; i++) {
             address donorAddress = campaignDonors[campaignId][i];
+            
             if (!refundedDonors[campaignId][donorAddress]) {
-                refundedDonors[campaignId][donorAddress] = true;
-                refundBalances[campaignId][donorAddress] += campaigns[campaignId].totalRaised;
+                uint256 donorAmount = refundBalances[campaignId][donorAddress];
+                
+                if (donorAmount > 0) {
+                    refundedDonors[campaignId][donorAddress] = true;
+                    refundBalances[campaignId][donorAddress] = 0;
+
+                    payable(donorAddress).transfer(donorAmount);
+
+                    emit RefundIssuedEvent(campaignId, donorAddress, donorAmount);
+                }
             }
         }
     }
 
     function withdrawDonation(bytes32 campaignId) public {
         uint256 refundAmount = refundBalances[campaignId][msg.sender];
+        
         require(refundAmount > 0, "You have no funds to withdraw");
 
+        Campaign storage campaign = campaigns[campaignId];
+        
+        require(!refundedDonors[campaignId][msg.sender], "You have already withdrawn your funds");
+
+        refundedDonors[campaignId][msg.sender] = true;
+        
         refundBalances[campaignId][msg.sender] = 0;
-        payable(msg.sender).transfer(refundAmount);
+        
+        campaign.totalRaised -= refundAmount;
+
+        (bool success, ) = msg.sender.call{value: refundAmount}("");
+        require(success, "Transfer failed");
+
+        emit RefundIssuedEvent(campaignId, msg.sender, refundAmount);
     }
 
     function withdrawCampaignFunds(bytes32 campaignId) public canWithdraw(campaignId) {
@@ -143,6 +175,7 @@ contract DoaChain {
 
         payable(campaigns[campaignId].authorWallet).transfer(raisedCampaign);
         theCreator.transfer(campaignFee);
+        emit FundsWithdrawnEvent(campaignId, msg.sender, raisedCampaign);
     }
 
     function checkActiveCampaign(bytes32 id) private {
@@ -162,5 +195,15 @@ contract DoaChain {
             allCampaigns[i] = campaigns[campaignIds[i]];
         }
         return allCampaigns;
+    }
+
+    function getLastCampaignIdByAuthor(address authorWallet) public view returns (bytes32) {
+        Campaign memory campaignByAuthor;
+        for (uint256 i = 0; i < campaignIds.length; i++) {
+            if (campaigns[campaignIds[i]].authorWallet == authorWallet){
+                campaignByAuthor = campaigns[campaignIds[i]];
+            }
+        }
+        return campaignByAuthor.id;
     }
 }

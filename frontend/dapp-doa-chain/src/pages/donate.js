@@ -1,7 +1,7 @@
 import HeadNext from "@/components/Head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getCampaignById, donate, login } from "@/services/Web3Service";
+import { getCampaignById, donate, login, withdrawDonation } from "@/services/Web3Service";
 import { dateFormatter, ethFormatter } from "@/utils/formatter";
 
 
@@ -58,6 +58,14 @@ export default function Donate() {
 
         donate(campaign.id, donation)
             .then(tx => setMessage(`Donation sent, ${campaign.authorName} thanks you for your support.`))
+            .catch(error => setMessage(error.message));
+    }
+
+    function btnWithdrawDonationClick() {
+        setMessage("Refunding donation ...");
+
+        withdrawDonation(campaign.id)
+            .then(tx => setMessage(`Donation refunded, unfortunately ${campaign.authorName} lost a donor, but you got your donated money back.`))
             .catch(error => setMessage(error.message));
     }
 
@@ -157,6 +165,13 @@ export default function Donate() {
                                                         <input type="number" id="donation" className="form-control" style={{ width: "20px" }} onChange={onChangeValue} value={donation} />
                                                         <span className="input-group-text" style={{ backgroundColor: "orange" }}>TBNB</span>
                                                         <input type="button" value="Donate" className="btn btn-neuro p-3" onClick={btnDonateClick} />
+                                                    </div>
+                                                </div>
+                                                <div className="mb-3 col-lg-5">
+                                                    <div>
+                                                        <p className="lead">If you have made a donation and regret it, you can withdraw your donation using the button below.</p>
+                                                        <p className="lead"><strong className="fw-bold">OBS:</strong> You cannot be refunded if you have made another donation.</p>
+                                                        <button type="button" value="Withdraw Donation" className="btn btn-block btn-neuro" style={{backgroundColor: "orange"}} onClick={btnWithdrawDonationClick}>Withdraw Donation</button>
                                                     </div>
                                                 </div>
                                             </>

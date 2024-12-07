@@ -2,7 +2,7 @@ import ConnectButton from "@/components/ConnectButton";
 import HeadNext from "@/components/Head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getCampaignById, withdrawDonation, login } from "@/services/Web3Service";
+import { getCampaignById, withdrawCampaignFunds, login } from "@/services/Web3Service";
 import { dateFormatter, ethFormatter } from "@/utils/formatter";
 
 
@@ -73,7 +73,7 @@ export default function Withdraw() {
     function btnWithdrawClick() {
         setMessage("Please wait, the balance is being sent to your wallet ...");
 
-        withdrawDonation(campaign.id)
+        withdrawCampaignFunds(campaign.id)
             .then(tx => setMessage("Transaction registered, soon the balance will be available to you"))
             .catch(error => setMessage(error.message));
     }
@@ -133,7 +133,15 @@ export default function Withdraw() {
                                     <p className="lead"><strong>End Date:</strong> {dateFormatter(campaign.endDate)}</p>
                                     <p className="lead"><strong>Campaign Active:</strong>{campaign.active ? " Yes" : " No"}</p>
                                     <p className="lead"><strong>Can Withdraw:</strong>{canWithDraw ? " Yes" : " No"}</p>
-                                    <p className="lead"><strong>Missing to Withdraw:</strong> {missing}</p>
+                                    {
+                                        missing > 0
+                                        ? (
+                                            <>
+                                                <p className="lead"><strong>Missing to Withdraw:</strong>{missing}</p>
+                                            </>
+                                        )
+                                        : <></>
+                                    }
 
                                 </div>
                                 {
