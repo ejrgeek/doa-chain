@@ -42,9 +42,9 @@ DoaChain is a project that is likely to be constantly evolving, with several imp
 - Test planning:
     - Structuring the plan for implementing tests with Truffle.
 
-### 🔵 Phase 2: Deployment in Test Environment (⏳ In Progress)
+### 🔵 Phase 2: Deployment in Test Environment (✅ Completed)
 - Testnet Deployment:
-    - Deployment of the contract in an Ethereum testnet.
+    - Deployment of the contract in an Ethereum testnet/BSC Testnet Network.
     - Setting up a test environment with simulated wallets.
 
 - Functional Testing:
@@ -54,10 +54,10 @@ DoaChain is a project that is likely to be constantly evolving, with several imp
 - Feedback and Reviews:
     - Collect feedback from potential users and review the code based on suggestions.
 
-### 🟡 Phase 3: dApp Development (🚧 In Planning)
+### 🟡 Phase 3: dApp Development (✅ Completed)
 - Interactive Frontend:
     - Development of a decentralized application (dApp) to interact with the contract.
-    - Suggested technologies: React.js or Next.js with Web3.js/Ethers.js.
+    - Technologies: React.js/Next.js with Web3.js
 
 - Wallet Connection:
     - Integration with Metamask to facilitate the use of wallets.
@@ -66,7 +66,7 @@ DoaChain is a project that is likely to be constantly evolving, with several imp
     - Intuitive design to create, view and donate to campaigns directly in the dApp.
 
 - Deployment of the dApp in a public environment:
-- Hosting on a service such as Vercel, Netlify or IPFS.
+-   Front end hosting at Vercel
 
 ### 🟡 Phase 4: Advanced Support (🚧 In Planning)
 - Stablecoins and ERC-20 Tokens:

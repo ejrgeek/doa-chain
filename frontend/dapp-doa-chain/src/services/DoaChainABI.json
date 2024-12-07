@@ -113,25 +113,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "bytes32",
-				"name": "id",
-				"type": "bytes32"
-			}
-		],
-		"name": "checkActiveCampaign",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "string",
 				"name": "authorName",
 				"type": "string"
@@ -302,101 +283,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "getCampaignIds",
-		"outputs": [
-			{
-				"internalType": "bytes32[]",
-				"name": "",
-				"type": "bytes32[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "getCampaigns",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "bytes32",
-						"name": "id",
-						"type": "bytes32"
-					},
-					{
-						"internalType": "string",
-						"name": "authorName",
-						"type": "string"
-					},
-					{
-						"internalType": "address",
-						"name": "authorWallet",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "title",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "description",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "videoUrl",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "imageUrl",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "goalBalance",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "totalRaised",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "startDate",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "endDate",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "active",
-						"type": "bool"
-					}
-				],
-				"internalType": "struct Campaign[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "authorWallet",
-				"type": "address"
-			}
-		],
-		"name": "getCampaignsByAuthor",
 		"outputs": [
 			{
 				"components": [

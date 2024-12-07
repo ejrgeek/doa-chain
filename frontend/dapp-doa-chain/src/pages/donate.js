@@ -1,4 +1,3 @@
-import Link from "next/link";
 import HeadNext from "@/components/Head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -48,7 +47,7 @@ export default function Donate() {
 
     return (
         <>
-            <HeadNext title={"Create Campaign"} />
+            <HeadNext title={"Donate"} />
             {/* HEADER */}
             <Header />
 
@@ -74,9 +73,9 @@ export default function Donate() {
                         )
                         : (
                             <>
-                                {JSON.stringify(campaign, (_, value) =>
+                                {/* {JSON.stringify(campaign, (_, value) =>
                                     typeof value === 'bigint' ? value.toString() : value
-                                )}
+                                )} */}
                                 <p className="lead">Please check that this is the correct campaign before making your donation.</p>
                                 <hr className="mb-4" />
 
@@ -117,8 +116,8 @@ export default function Donate() {
                                         <p className="lead"><strong>Author Wallet:</strong> {campaign.authorWallet}</p>
                                         <p className="lead"><strong>Descripton:</strong></p>
                                         <p className="lead">{campaign.description}</p>
-                                        <p className="lead"><strong>Goal:</strong> {ethFormatter(campaign.goalBalance)} BNB</p>
-                                        <p className="lead"><strong>Total Raised:</strong> {ethFormatter(campaign.totalRaised)} BNB</p>
+                                        <p className="lead"><strong>Goal:</strong> {ethFormatter(campaign.goalBalance)} TBNB</p>
+                                        <p className="lead"><strong>Total Raised:</strong> {ethFormatter(campaign.totalRaised)} TBNB</p>
                                         <p className="lead"><strong>Created at:</strong> {dateFormatter(campaign.startDate)}</p>
                                         <p className="lead"><strong>End Date:</strong> {dateFormatter(campaign.endDate)}</p>
                                         <p className="lead"><strong>Campaign Active:</strong>{campaign.active ? " Yes" : " No" }</p>
@@ -130,7 +129,7 @@ export default function Donate() {
                                 <div className="mb-3 col-lg-3">
                                     <div className="input-group">
                                         <input type="number" id="donation" className="form-control" style={{ width: "20px" }} onChange={onChangeValue} value={donation} />
-                                        <span className="input-group-text" style={{ backgroundColor: "orange" }}>BNB</span>
+                                        <span className="input-group-text" style={{ backgroundColor: "orange" }}>TBNB</span>
                                         <input type="button" value="Donate" className="btn btn-neuro p-3" onClick={btnDonateClick} />
                                     </div>
                                 </div>

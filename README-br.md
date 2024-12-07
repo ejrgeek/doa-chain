@@ -44,9 +44,9 @@ O DoaChain é um projeto de possível constante evolução, com diversas melhori
 - Planejamento de testes:
     - Estruturação do plano para implementação de testes com Truffle.
 
-### 🔵 Fase 2: Deploy em Ambiente de Teste (⏳ Em Progresso)
+### 🔵 Fase 2: Deploy em Ambiente de Teste (✅ Concluída)
 - Testnet Deployment:
-    - Deploy do contrato em uma testnet Ethereum.
+    - Deploy do contrato em uma testnet Ethereum/BSC Testnet Network.
     - Configuração de ambiente de testes com carteiras simuladas.
 
 - Testes Funcionais:
@@ -56,10 +56,10 @@ O DoaChain é um projeto de possível constante evolução, com diversas melhori
 - Feedback e Revisões:
     - Coletar feedback de possíveis usuários e revisar o código com base em sugestões.
 
-### 🟡 Fase 3: Desenvolvimento do dApp (🚧 Em Planejamento)
+### 🟡 Fase 3: Desenvolvimento do dApp (✅ Concluída)
 - Frontend Interativo:
     - Desenvolvimento de uma aplicação descentralizada (dApp) para interação com o contrato.
-    - Tecnologias sugeridas: React.js ou Next.js com Web3.js/Ethers.js.
+    - Tecnologias: React.js/Next.js com Web3.js
 
 - Conexão Wallet:
     - Integração com Metamask para facilitar o uso de carteiras.
@@ -68,7 +68,7 @@ O DoaChain é um projeto de possível constante evolução, com diversas melhori
     - Design intuitivo para criar, visualizar e doar para campanhas diretamente no dApp.
 
 - Deploy do dApp em ambiente público:
-    -Hospedagem em um serviço como Vercel, Netlify ou IPFS.
+    - Hospedagem de front end na vercel
 
 ### 🟡 Fase 4: Suporte Avançado (🚧 Em Planejamento)
 - Stablecoins e Tokens ERC-20:

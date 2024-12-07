@@ -52,6 +52,7 @@ export default function Create() {
 
                 <h1 style={{ color: "#ffa46f" }} >Create Your Campaign</h1>
                 <p className="lead">Complete the form to create a new campaign</p>
+                <p className="lead">The platform fee is 0.015 eth</p>
                 <hr className="mb-4" />
                 <form className="form-floating">
                     {/* Author Name and Title */}
@@ -92,7 +93,7 @@ export default function Create() {
                     <div className="row">
 
                         <div className="col-lg-6 mb-3">
-                            <label for="goalBalance" className="form-label lead">Goal (BNB)</label>
+                            <label for="goalBalance" className="form-label lead">Goal (TBNB)</label>
                             <input required id="goalBalance" className="form-control" type={"number"} value={campaign.goalBalance} onChange={onInputChange} />
                         </div>
 

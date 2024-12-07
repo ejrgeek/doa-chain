@@ -24,7 +24,7 @@ struct Campaign {
 }
 
 contract DoaChain {
-    uint256 public campaignFee = 500; // wei
+    uint256 public campaignFee = 15000000000000000; // wei
 
     mapping(bytes32 => Campaign) public campaigns;
     Donor[] public donors;
@@ -42,8 +42,7 @@ contract DoaChain {
 
         require(campaign.authorWallet == msg.sender, "You are not allowed to withdraw");
         require(campaign.totalRaised >= campaign.goalBalance, "You have no balance");
-        require(campaign.totalRaised >= campaign.totalRaised + campaignFee, "You don't have enough balance yet");
-        require(campaign.active == true, "Campaign is finished");
+        require(campaign.totalRaised >= campaign.goalBalance + campaignFee, "You don't have enough balance yet");
         require(address(this).balance >= campaign.totalRaised, "ERROR");
         _;
     }
@@ -164,23 +163,17 @@ contract DoaChain {
 
     }
 
-    function checkActiveCampaign(bytes32 id) public returns (bool) {      
+    function checkActiveCampaign(bytes32 id) private {      
         require(campaigns[id].startDate != 0);
 
         if (campaigns[id].active && campaigns[id].endDate <= block.timestamp){
             campaigns[id].active = false;
         }
 
-        return campaigns[id].active;
-
     } 
 
     function getCampaign(bytes32 id) public view returns (Campaign memory){
         return campaigns[id];
-    }
-
-    function getCampaignIds() public view returns (bytes32[] memory) {
-        return campaignIds;
     }
 
     function getCampaigns() public view returns (Campaign[] memory) {
@@ -189,16 +182,6 @@ contract DoaChain {
             allCampaigns[i] = campaigns[campaignIds[i]];
         }
         return allCampaigns;
-    }
-
-    function getCampaignsByAuthor(address authorWallet) public view returns (Campaign[] memory) {
-        Campaign[] memory campaignsByAuthor = new Campaign[](campaignIds.length);
-        for (uint256 i = 0; i < campaignIds.length; i++) {
-            if (campaigns[campaignIds[i]].authorWallet == authorWallet){
-                campaignsByAuthor[i] = campaigns[campaignIds[i]];
-            }
-        }
-        return campaignsByAuthor;
     }
 
     function getLastCampaignIdByAuthor(address authorWallet) public view returns (bytes32) {
