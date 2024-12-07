@@ -1,13 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.20 <0.9.0;
 
-struct Donor {
-    bytes32 campaignId;
-    address payable donorWallet;
-    uint256 value;
-    uint donateIn;
-}
-
 struct Campaign {
     bytes32 id;
     string authorName;
@@ -24,22 +17,23 @@ struct Campaign {
 }
 
 contract DoaChain {
-    uint256 public campaignFee = 15000000000000000; // wei
+    uint256 public campaignFee = 15000000000000000; // 0.015 ETH
 
     mapping(bytes32 => Campaign) public campaigns;
-    Donor[] public donors;
+    mapping(bytes32 => address[]) private campaignDonors;
+    mapping(bytes32 => mapping(address => uint256)) private refundBalances;
+    mapping(bytes32 => mapping(address => bool)) private refundedDonors;
     bytes32[] public campaignIds;
 
     address payable theCreator;
 
-    modifier isTheCreator(){
+    modifier isTheCreator() {
         require(msg.sender == theCreator, "You are not allowed");
         _;
     }
 
-    modifier canWithdraw(bytes32 campaignId){
+    modifier canWithdraw(bytes32 campaignId) {
         Campaign memory campaign = campaigns[campaignId];
-
         require(campaign.authorWallet == msg.sender, "You are not allowed to withdraw");
         require(campaign.totalRaised >= campaign.goalBalance, "You have no balance");
         require(campaign.totalRaised >= campaign.goalBalance + campaignFee, "You don't have enough balance yet");
@@ -55,7 +49,7 @@ contract DoaChain {
         string calldata imageUrl, 
         uint256 goalBalance, 
         uint endDate
-    ){
+    ) {
         require(bytes(authorName).length >= 3, "Author Name must be longer than three characters");
         require(bytes(title).length >= 10, "Title must be longer than ten characters");
         require(bytes(description).length >= 50, "Description must be longer than three characters");
@@ -65,20 +59,13 @@ contract DoaChain {
         _;
     }
 
-    constructor(){
+    constructor() {
         theCreator = payable(msg.sender);
     }
 
     function generateCampaignId() private view returns (bytes32) {
-        return keccak256(
-            abi.encodePacked(
-                block.timestamp,
-                block.prevrandao,
-                msg.sender
-            )
-        );
+        return keccak256(abi.encodePacked(block.timestamp, block.number, msg.sender));
     }
-
 
     function createCampaign(
         string calldata authorName,
@@ -89,7 +76,6 @@ contract DoaChain {
         uint256 goalBalance,
         uint endDate
     ) public createCampaignValidate(authorName, title, description, videoUrl, imageUrl, goalBalance, endDate) {
-        
         bytes32 idCampaign = generateCampaignId();
         
         Campaign memory newCampaign = Campaign({
@@ -108,30 +94,20 @@ contract DoaChain {
         });
 
         campaigns[idCampaign] = newCampaign;
-
-        campaignIds.push(idCampaign);        
-
+        campaignIds.push(idCampaign);
     }
 
     function donate(bytes32 campaignId) public payable {
-
         checkActiveCampaign(campaignId);
+        require(campaigns[campaignId].active == true, "Campaign is no longer active");
         require(msg.value > 0, "Your donation must be greater than zero");
-        require(campaigns[campaignId].active == true, "Only active campaigns can receive donations");
 
-        campaigns[campaignId].totalRaised  += msg.value;
+        campaigns[campaignId].totalRaised += msg.value;
 
-        Donor memory donor = Donor({
-            campaignId: campaignId,
-            donorWallet: payable(msg.sender),
-            value: msg.value,
-            donateIn: block.timestamp
-        });
-
-        donors.push(donor);
-
+        campaignDonors[campaignId].push(msg.sender);
+        refundBalances[campaignId][msg.sender] += msg.value;
     }
-    
+
     function returnDonation(bytes32 campaignId) public isTheCreator {
         checkActiveCampaign(campaignId);
         Campaign memory campaign = campaigns[campaignId];
@@ -139,40 +115,44 @@ contract DoaChain {
         require(block.timestamp > campaign.endDate, "Campaign in progress");
         require(campaign.goalBalance < campaign.totalRaised, "The campaign reached its goal");
 
-        for (uint i = 0; i < donors.length; i++){
-            donors[i].donorWallet.transfer(donors[i].value);
+        for (uint i = 0; i < campaignDonors[campaignId].length; i++) {
+            address donorAddress = campaignDonors[campaignId][i];
+            if (!refundedDonors[campaignId][donorAddress]) {
+                refundedDonors[campaignId][donorAddress] = true;
+                refundBalances[campaignId][donorAddress] += campaigns[campaignId].totalRaised;
+            }
         }
-                
     }
 
+    function withdrawDonation(bytes32 campaignId) public {
+        uint256 refundAmount = refundBalances[campaignId][msg.sender];
+        require(refundAmount > 0, "You have no funds to withdraw");
 
-    function withdraw(bytes32 campaignId) public canWithdraw(campaignId) {
+        refundBalances[campaignId][msg.sender] = 0;
+        payable(msg.sender).transfer(refundAmount);
+    }
 
-        checkActiveCampaign(campaignId);
-
-        Campaign memory campaign = campaigns[campaignId];
+    function withdrawCampaignFunds(bytes32 campaignId) public canWithdraw(campaignId) {
+        require(campaigns[campaignId].active == true, "Campaign is no longer active");
 
         campaigns[campaignId].active = false;
+        uint256 raisedCampaign = campaigns[campaignId].totalRaised - campaignFee;
 
-        address payable recipient = payable(address(uint160(campaign.authorWallet)));
+        campaigns[campaignId].goalBalance = 0;
+        campaigns[campaignId].totalRaised = 0;
 
-        uint256 raisedCampaign = campaign.totalRaised - campaignFee;
-
-        recipient.transfer(raisedCampaign);
+        payable(campaigns[campaignId].authorWallet).transfer(raisedCampaign);
         theCreator.transfer(campaignFee);
-
     }
 
-    function checkActiveCampaign(bytes32 id) private {      
+    function checkActiveCampaign(bytes32 id) private {
         require(campaigns[id].startDate != 0);
-
-        if (campaigns[id].active && campaigns[id].endDate <= block.timestamp){
+        if (campaigns[id].active && campaigns[id].endDate <= block.timestamp) {
             campaigns[id].active = false;
         }
+    }
 
-    } 
-
-    function getCampaign(bytes32 id) public view returns (Campaign memory){
+    function getCampaign(bytes32 id) public view returns (Campaign memory) {
         return campaigns[id];
     }
 
@@ -183,15 +163,4 @@ contract DoaChain {
         }
         return allCampaigns;
     }
-
-    function getLastCampaignIdByAuthor(address authorWallet) public view returns (bytes32) {
-        Campaign memory campaignByAuthor;
-        for (uint256 i = 0; i < campaignIds.length; i++) {
-            if (campaigns[campaignIds[i]].authorWallet == authorWallet){
-                campaignByAuthor = campaigns[campaignIds[i]];
-            }
-        }
-        return campaignByAuthor.id;
-    }
-
 }

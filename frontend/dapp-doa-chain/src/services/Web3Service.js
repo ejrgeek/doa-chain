@@ -98,10 +98,10 @@ export function donate(campaignId, donateValue) {
     return contract.methods.donate(campaignId).send({ value: Number(valueInWei) });
 }
 
-export function withdraw(campaignId) {
+export function withdrawDonation(campaignId) {
     if (!campaignId) throw new Error("Campaign ID is required");
 
     const contract = getContract();
 
-    return contract.methods.withdraw(campaignId).send();
+    return contract.methods.withdrawDonation(campaignId).send();
 }

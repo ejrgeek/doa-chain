@@ -169,40 +169,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "donors",
-		"outputs": [
-			{
-				"internalType": "bytes32",
-				"name": "campaignId",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "address payable",
-				"name": "donorWallet",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "donateIn",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "bytes32",
 				"name": "id",
 				"type": "bytes32"
@@ -359,25 +325,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "authorWallet",
-				"type": "address"
-			}
-		],
-		"name": "getLastCampaignIdByAuthor",
-		"outputs": [
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "bytes32",
 				"name": "campaignId",
 				"type": "bytes32"
@@ -396,7 +343,20 @@
 				"type": "bytes32"
 			}
 		],
-		"name": "withdraw",
+		"name": "withdrawCampaignFunds",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "campaignId",
+				"type": "bytes32"
+			}
+		],
+		"name": "withdrawDonation",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

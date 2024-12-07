@@ -2,7 +2,7 @@ import ConnectButton from "@/components/ConnectButton";
 import HeadNext from "@/components/Head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getCampaignById, withdraw, login } from "@/services/Web3Service";
+import { getCampaignById, withdrawDonation, login } from "@/services/Web3Service";
 import { dateFormatter, ethFormatter } from "@/utils/formatter";
 
 
@@ -73,7 +73,7 @@ export default function Withdraw() {
     function btnWithdrawClick() {
         setMessage("Please wait, the balance is being sent to your wallet ...");
 
-        withdraw(campaign.id)
+        withdrawDonation(campaign.id)
             .then(tx => setMessage("Transaction registered, soon the balance will be available to you"))
             .catch(error => setMessage(error.message));
     }
