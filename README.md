@@ -1,6 +1,6 @@
 # dApp - DoaChain
 
-[Versão em Português](README-br.md)
+[`Versão em Português`](README-br.md)
 
 DoaChain is a donation platform **dApp**,
 designed to meet various fundraising needs,

@@ -1,6 +1,6 @@
 # Smart Contract - DoaChain
 
-[Versão em Português](README-br.md)
+[`Versão em Português`](README-br.md)
 
 DoaChain is a **smart contract** for a donation platform,
 designed to meet various fundraising needs,
