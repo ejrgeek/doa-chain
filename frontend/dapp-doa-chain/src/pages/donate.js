@@ -4,11 +4,15 @@ import Footer from "@/components/Footer";
 import { getCampaignById, donate, login, withdrawDonation } from "@/services/Web3Service";
 import { dateFormatter, ethFormatter } from "@/utils/formatter";
 
-
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ConnectButton from "@/components/ConnectButton";
 
 export default function Donate() {
+
+    const router = useRouter();
+
+    const {id} = router.query;
 
     const [campaign, setCampaign] = useState({});
 
@@ -17,6 +21,23 @@ export default function Donate() {
     const [message, setMessage] = useState("");
 
     const [wallet, setWallet] = useState("");
+
+    useEffect(() => {
+
+        if (id) {
+            setMessage("Loading campaign data ...");
+            getCampaignById(id)
+            .then(result => {
+                setMessage("");
+                setCampaign(result);
+            })
+            .catch(error => {
+                console.log(error);
+                setMessage(`Error: ${error.message}`);
+            });
+        }
+
+    }, [id]);
 
     function onChangeId(evt) {
         campaign.id = evt.target.value;

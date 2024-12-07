@@ -113,3 +113,11 @@ export function withdrawCampaignFunds(campaignId) {
 
     return contract.methods.withdrawCampaignFunds(campaignId).send();
 }
+
+export function getAllCampaigns() {
+
+    const contract = getContract();
+
+    return contract.methods.getCampaigns().call();
+
+}
