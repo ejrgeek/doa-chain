@@ -1,13 +1,16 @@
+import ConnectButton from "@/components/ConnectButton";
 import HeadNext from "@/components/Head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getCampaignById, withdraw } from "@/services/Web3Service";
+import { getCampaignById, withdraw, login } from "@/services/Web3Service";
 import { dateFormatter, ethFormatter } from "@/utils/formatter";
 
 
 import { useState, useEffect } from "react";
 
 export default function Withdraw() {
+
+    const [wallet, setWallet] = useState("");
 
     const [campaign, setCampaign] = useState({});
 
@@ -33,7 +36,7 @@ export default function Withdraw() {
 
         setMissing(ethFormatter(missingReceive));
 
-        return totalRaised >= required;
+        return totalRaised >= required && campaign.active;
     }
 
     useEffect(() => {
@@ -41,8 +44,17 @@ export default function Withdraw() {
             const result = checkIfCanWithdraw();
             setCanWithDraw(result);
         }
+        const userWallet = localStorage.getItem("wallet") || null;
+        if (userWallet) {
+            setWallet(userWallet);
+        }
     }, [campaign]);
 
+    function btnLoginClick() {
+        login()
+            .then(wallet => setWallet(wallet))
+            .catch(error => setError(error.message));
+    }
 
     function btnSearchClick() {
         setMessage("Searching for Campaign, please wait...");
@@ -128,20 +140,33 @@ export default function Withdraw() {
                                     canWithDraw
                                         ? (
                                             <>
-                                                <div className="mb-3 mt-4 col-lg-6">
-                                                    <p className="lead">Thank you for using my platform, I hope you get what you came for. Come back soon!</p>
-                                                </div>
-                                                <div className="mb-3 col-lg-6">
-                                                    <div className="input-group">
-                                                        <input type="button" value="Withdraw" className="btn btn-neuro" onClick={btnWithdrawClick} />
-                                                    </div>
-                                                </div>
+                                                {
+                                                    !wallet
+                                                        ? (
+                                                            <>
+                                                                <p className="lead">You need to connect your wallet</p>
+                                                                <ConnectButton func={btnLoginClick} />
+                                                            </>
+                                                        )
+                                                        : (
+                                                            <>
+                                                                <div className="mb-3 mt-4 col-lg-6">
+                                                                    <p className="lead">Thank you for using my platform, I hope you get what you came for. Come back soon!</p>
+                                                                </div>
+                                                                <div className="mb-3 col-lg-6">
+                                                                    <div className="input-group">
+                                                                        <input type="button" value="Withdraw" className="btn btn-neuro" onClick={btnWithdrawClick} />
+                                                                    </div>
+                                                                </div>
+                                                            </>
+                                                        )
+                                                }
                                             </>
                                         )
                                         : (
                                             <>
-                                            <div className="mb-3 mt-4 col-lg-6">
-                                                    <p className="lead">It is not possible to withdraw at the moment, Sorry!</p>
+                                                <div className="mb-3 mt-4 col-lg-6">
+                                                    <p className="lead">It is not possible to withdraw at the moment!</p>
                                                 </div>
                                             </>
                                         )

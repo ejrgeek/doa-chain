@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ConnectButton from "@/components/ConnectButton";
 import HeadNext from "@/components/Head";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -87,7 +88,8 @@ export default function Home() {
 								!wallet
 								? (
 									<div>
-										<button
+										<ConnectButton func={btnLoginClick} />
+										{/* <button
 											type="button"
 											className="btn-neuromorphic btn-lg fw-semibold d-flex align-items-center gap-2 connectButton"
 											onClick={btnLoginClick}
@@ -98,7 +100,7 @@ export default function Home() {
 												height="30"
 											/>
 											Connect to Metamask
-										</button>
+										</button> */}
 
 										<div>		
 											<p className="mb-0 text-danger">{error}</p>
