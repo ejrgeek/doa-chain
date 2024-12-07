@@ -1,6 +1,8 @@
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
+[Versão em Português](README-br.md)
+
 # Frontend - dApp DoaChain
 
 This is the frontend of a blockchain-based campaign creation and donation management platform. The project allows users to create campaigns, view details about existing campaigns, and withdraw funds when they reach their fundraising goal.
@@ -31,7 +33,7 @@ cd doa-chain/frontend/dapp-doa-chain/
 ```bash
 npm install
 ```
-3. **Set environment variables:** Create a .env file in the project root with the following environment variables:
+3. **Set environment variables:** Create a ```.env``` file in the project root with the following environment variables:
 ```bash
 NEXT_PUBLIC_CONTRACT_ADDRESS=<contract_address_here>
 ```
@@ -42,14 +44,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
 ## Features:
 1. Create Campaign
 
@@ -58,8 +52,8 @@ The user can create a new campaign by filling in the following fields:
 - Author's name
 - Campaign title
 - Description
-- Video URL (optional)
-- Image URL (optional)
+- Video URL
+- Image URL
 - Funding goal (in TBNB)
 - End date (in days from the current date)
 
@@ -75,14 +69,13 @@ After verifying the campaign information, users can make a donation by inputting
 
 The system checks whether the campaign has reached the fundraising target + platform fee, allowing or not the withdrawal of the amount raised.
 
-Caso a campanha tenha atingido a meta de arrecadação e a taxa, o usuário pode solicitar o saque dos fundos diretamente para sua carteira.
+If the campaign has reached the fundraising goal and the fee, the user can request to withdraw the funds directly to their wallet.
 
 5. User Feedback
 
 The system displays messages about the status of the donation, including:
-
-Success message after the donation is submitted.
-Error messages if something goes wrong during the transaction.
+- Success message after the donation is submitted.
+- Error messages if something goes wrong during the transaction.
 
 6. Components
 
