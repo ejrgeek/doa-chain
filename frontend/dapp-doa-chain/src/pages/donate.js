@@ -48,7 +48,7 @@ export default function Donate() {
             }, id);
 
         }
-    }, [eventTrigger]);
+    }, [id, eventTrigger]);
 
     useEffect(() => {
 
@@ -188,11 +188,11 @@ export default function Donate() {
 
                                     {/* IMAGE */}
                                     {
-                                        campaign.imageUrl
+                                        campaign.image
                                             ? (
 
                                                 <div className="col-lg-6 px-5">
-                                                    <img className="show-media-neuro" height="500" src={campaign.imageUrl} />
+                                                    <img className="show-media-neuro" width="500" src={campaign.image} />
                                                 </div>
                                             )
                                             : <></>

@@ -8,7 +8,7 @@ struct Campaign {
     string title;
     string description;
     string videoUrl;
-    string imageUrl;
+    string image;
     uint256 goalBalance;
     uint256 totalRaised;
     uint startDate;
@@ -51,13 +51,15 @@ contract DoaChain {
         string calldata title, 
         string calldata description, 
         string calldata videoUrl, 
-        string calldata imageUrl, 
+        string calldata image, 
         uint256 goalBalance, 
         uint endDate
     ) {
         require(bytes(authorName).length >= 3, "Author Name must be longer than three characters");
         require(bytes(title).length >= 10, "Title must be longer than ten characters");
         require(bytes(description).length >= 50, "Description must be longer than three characters");
+        require(bytes(videoUrl).length > 0, "A link to your campaign video must be sent");
+        require(bytes(image).length > 0, "A link to your campaign image must be sent");
         require(goalBalance > 0, "Goal must be greater than zero");
         require(endDate > 0, "Campaign end date must be greater than zero");
         require(block.timestamp + (endDate * 1 days) > block.timestamp, "Campaign end date must be later than current date");
@@ -77,10 +79,10 @@ contract DoaChain {
         string calldata title,
         string calldata description,
         string calldata videoUrl,
-        string calldata imageUrl,
+        string calldata image,
         uint256 goalBalance,
         uint endDate
-    ) public createCampaignValidate(authorName, title, description, videoUrl, imageUrl, goalBalance, endDate) {
+    ) public createCampaignValidate(authorName, title, description, videoUrl, image, goalBalance, endDate) {
         bytes32 idCampaign = generateCampaignId();
         
         Campaign memory newCampaign = Campaign({
@@ -90,7 +92,7 @@ contract DoaChain {
             title: title,
             description: description,
             videoUrl: videoUrl,
-            imageUrl: imageUrl,
+            image: image,
             startDate: block.timestamp,
             endDate: block.timestamp + (endDate * 1 days),
             goalBalance: goalBalance,

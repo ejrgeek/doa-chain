@@ -208,7 +208,7 @@
 			},
 			{
 				"internalType": "string",
-				"name": "imageUrl",
+				"name": "image",
 				"type": "string"
 			},
 			{
@@ -264,7 +264,7 @@
 			},
 			{
 				"internalType": "string",
-				"name": "imageUrl",
+				"name": "image",
 				"type": "string"
 			},
 			{
@@ -340,7 +340,7 @@
 					},
 					{
 						"internalType": "string",
-						"name": "imageUrl",
+						"name": "image",
 						"type": "string"
 					},
 					{
@@ -415,7 +415,7 @@
 					},
 					{
 						"internalType": "string",
-						"name": "imageUrl",
+						"name": "image",
 						"type": "string"
 					},
 					{

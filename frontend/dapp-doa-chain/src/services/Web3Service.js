@@ -37,35 +37,37 @@ function getContract() {
 }
 
 export async function createCampaign(campaign) {
-        if (campaign.authorName.length < 3) {
-            return "Author Name must be longer than three characters";
-        }
-    
-        if (campaign.title.length < 10) {
-            return "Title must be longer than ten characters";
-        }
-    
-        if (campaign.description.length < 50) {
-            return "Description must be longer than fifty characters";
-        }
-    
-        if (parseFloat(campaign.goalBalance) <= 0) {
-            return "Goal must be greater than zero";
-        }
-    
-        if (parseInt(campaign.endDate) <= 0) {
-            return "Campaign end date must be greater than zero";
-        }
-    
-        const currentDate = Math.floor(Date.now() / 1000);
-        const campaignEndDate = currentDate + (parseInt(campaign.endDate) * 86400);
-        if (campaignEndDate <= currentDate) {
-            return "Campaign end date must be later than current date";
-        }
-    
-        const contract = getContract();
-        const result = await contract.methods.createCampaign(campaign.authorName, campaign.title, campaign.description, campaign.videoUrl, campaign.imageUrl, campaign.goalBalance, campaign.endDate).send();
-        return result;
+    if (campaign.authorName.length < 3) {
+        return "Author Name must be longer than three characters";
+    }
+
+    if (campaign.title.length < 10) {
+        return "Title must be longer than ten characters";
+    }
+
+    if (campaign.description.length < 50) {
+        return "Description must be longer than fifty characters";
+    }
+
+
+
+    if (parseFloat(campaign.goalBalance) <= 0) {
+        return "Goal must be greater than zero";
+    }
+
+    if (parseInt(campaign.endDate) <= 0) {
+        return "Campaign end date must be greater than zero";
+    }
+
+    const currentDate = Math.floor(Date.now() / 1000);
+    const campaignEndDate = currentDate + (parseInt(campaign.endDate) * 86400);
+    if (campaignEndDate <= currentDate) {
+        return "Campaign end date must be later than current date";
+    }
+
+    const contract = getContract();
+    const result = await contract.methods.createCampaign(campaign.authorName, campaign.title, campaign.description, campaign.videoUrl, campaign.image, campaign.goalBalance, campaign.endDate).send();
+    return result;
 }
 
 
@@ -75,9 +77,9 @@ export async function listenToCampaignCreatedEvent(callback) {
     contract.events.CampaignCreatedEvent({
         fromBlock: 'latest'
     })
-    .on('data', event =>{
-        callback(event);
-    });
+        .on('data', event => {
+            callback(event);
+        });
 }
 
 export async function getLastCampaignByAuthor() {
@@ -115,13 +117,13 @@ export async function listenToDonationMadeEvent(callback, campaignId) {
     const contract = getContract();
 
     contract.events.DonationMadeEvent({
-        filter: {campaignId: campaignId},
+        filter: { campaignId: campaignId },
         fromBlock: 0,
         toBlock: 'latest'
     })
-    .on('data', (event) => {
-        callback(event);
-    });
+        .on('data', (event) => {
+            callback(event);
+        });
 }
 
 
@@ -135,17 +137,17 @@ export async function withdrawDonation(campaignId) {
     return result;
 }
 
-export async function listenToRefundIssuedEvent(callback, campaignId){
+export async function listenToRefundIssuedEvent(callback, campaignId) {
     const contract = getContract();
 
     contract.events.RefundIssuedEvent({
-        filter: {campaignId: campaignId},
+        filter: { campaignId: campaignId },
         fromBlock: 0,
         toBlock: 'latest'
     })
-    .on('data', event => {
-        callback(event)
-    });
+        .on('data', event => {
+            callback(event)
+        });
 }
 
 
@@ -163,12 +165,12 @@ export async function listenToFundsWithdrawnEvent(callback, campaignId) {
     const contract = getContract();
 
     contract.events.FundsWithdrawnEvent({
-        filter: {campaignId: campaignId},
+        filter: { campaignId: campaignId },
         fromBlock: 'latest'
     })
-    .on('data', event => {
-        callback(event);
-    });
+        .on('data', event => {
+            callback(event);
+        });
 }
 
 

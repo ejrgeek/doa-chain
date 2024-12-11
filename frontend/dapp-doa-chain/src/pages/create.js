@@ -15,7 +15,7 @@ export default function Create() {
         title: "",
         description: "",
         videoUrl: "",
-        imageUrl: "",
+        image: "",
         goalBalance: 1,
         endDate: 1,
     });
@@ -109,7 +109,7 @@ export default function Create() {
                                             <textarea required id="description" className="form-control" minLength={50} rows={3} value={campaign.description} onChange={onInputChange}></textarea>
                                         </div>
                                     </div>
-                                    {/* videoUrl and imageUrl */}
+                                    {/* videoUrl and image */}
                                     <div className="row">
 
                                         <div className="col-lg-6 mb-3">
@@ -118,8 +118,8 @@ export default function Create() {
                                         </div>
 
                                         <div className="col-lg-6">
-                                            <label for="imageUrl" className="form-label lead">Image Url</label>
-                                            <input required id="imageUrl" className="form-control" type="url" value={campaign.imageUrl} onChange={onInputChange} />
+                                            <label for="image" className="form-label lead">Image Url</label>
+                                            <input required id="image" className="form-control" type="url" value={campaign.image} onChange={onInputChange} />
                                         </div>
                                     </div>
                                     {/* goalBalance and endDate */}
