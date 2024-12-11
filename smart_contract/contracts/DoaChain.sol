@@ -117,32 +117,6 @@ contract DoaChain {
         emit DonationMadeEvent(campaignId, msg.sender, msg.value);
     }
 
-    function returnDonation(bytes32 campaignId) public isTheCreator {
-        checkActiveCampaign(campaignId);
-        Campaign memory campaign = campaigns[campaignId];
-
-        require(block.timestamp > campaign.endDate, "Campaign is still active");
-        
-        require(campaign.goalBalance < campaign.totalRaised, "The campaign reached its goal");
-
-        for (uint i = 0; i < campaignDonors[campaignId].length; i++) {
-            address donorAddress = campaignDonors[campaignId][i];
-            
-            if (!refundedDonors[campaignId][donorAddress]) {
-                uint256 donorAmount = refundBalances[campaignId][donorAddress];
-                
-                if (donorAmount > 0) {
-                    refundedDonors[campaignId][donorAddress] = true;
-                    refundBalances[campaignId][donorAddress] = 0;
-
-                    payable(donorAddress).transfer(donorAmount);
-
-                    emit RefundIssuedEvent(campaignId, donorAddress, donorAmount);
-                }
-            }
-        }
-    }
-
     function withdrawDonation(bytes32 campaignId) public {
         uint256 refundAmount = refundBalances[campaignId][msg.sender];
         
