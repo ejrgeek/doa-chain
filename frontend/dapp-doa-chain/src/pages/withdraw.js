@@ -2,7 +2,7 @@ import ConnectButton from "@/components/ConnectButton";
 import HeadNext from "@/components/Head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getCampaignById, withdrawCampaignFunds, login } from "@/services/Web3Service";
+import { getCampaignById, withdrawCampaignFunds, login, listenToFundsWithdrawnEvent } from "@/services/Web3Service";
 import { dateFormatter, ethFormatter } from "@/utils/formatter";
 
 
@@ -19,6 +19,10 @@ export default function Withdraw() {
     const [missing, setMissing] = useState("0.0");
 
     const [message, setMessage] = useState("");
+
+    const [events, setEvents] = useState(new Set());
+
+    const [eventTrigger, setEventTrigger] = useState(false);
 
     function onChangeId(evt) {
         campaign.id = evt.target.value;
@@ -50,6 +54,29 @@ export default function Withdraw() {
         }
     }, [campaign]);
 
+    useEffect(() => {
+        if (campaign.id){
+            listenToFundsWithdrawnEvent((event) => {
+                setEvents(prevEvent => {
+                    const updatedEvent = new Set(prevEvent);
+                    const newEvent = `Refund Issued: ${event.returnValues.donor} received ${event.returnValues.amount} wei refund for campaign ID: ${event.returnValues.campaignId}, timestamp: ${event.returnValues.timestamp}`;
+                    updatedEvent.add(newEvent);
+                    return updatedEvent;
+                });
+            }, campaign.id);
+        }
+    }, [eventTrigger]);
+
+    useEffect(() => {
+        if (campaign.id) {
+            getCampaignById(campaign.id)
+                .then(result => {
+                    setMessage("");
+                    setCampaign(result);
+                });
+        }
+    }, [eventTrigger]);
+
     function btnLoginClick() {
         login()
             .then(wallet => setWallet(wallet))
@@ -74,7 +101,10 @@ export default function Withdraw() {
         setMessage("Please wait, the balance is being sent to your wallet ...");
 
         withdrawCampaignFunds(campaign.id)
-            .then(tx => setMessage("Transaction registered, soon the balance will be available to you"))
+            .then(tx => {
+                setEventTrigger(prev => !prev);
+                setMessage("Transaction registered, soon the balance will be available to you")
+            })
             .catch(error => setMessage(error.message));
     }
 
@@ -183,6 +213,7 @@ export default function Withdraw() {
                             </>
                         )
                 }
+                {/* message */}
                 {
                     !message
                         ?
@@ -190,6 +221,15 @@ export default function Withdraw() {
                         </>
                         : <div className="mt-3 alert alert-info p-3" role="alert">{message}</div>
                 }
+
+                <div className="mt-4">
+                    <h4>Events:</h4>
+                    <ul>
+                        {Array.from(events).map((event, index) => (
+                            <li key={index}>{event}</li>
+                        ))}
+                    </ul>
+                </div>
 
             </div>
 

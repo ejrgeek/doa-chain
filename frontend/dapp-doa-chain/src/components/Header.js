@@ -13,9 +13,6 @@ export default function Header(){
             </div>
             <ul className="nav col-md-6 justify-content-end">
                 <li className="nav-item" >
-                    <Link href="/" className="nav-link px-2 text-body-secondary">Home</Link>
-                </li>
-                <li className="nav-item" >
                     <Link href="/create" className="nav-link px-2 text-body-secondary">Create Campaign</Link>
                 </li>
                 <li className="nav-item" >

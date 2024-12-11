@@ -93,7 +93,9 @@ export default function AllCampaigns() {
                                 <>
                                     {
                                         currentCampaigns.map(campaign => (
-                                            <CampaignCard campaign={campaign} />
+                                            <div key={campaign.id}>
+                                                <CampaignCard campaign={campaign} />
+                                            </div>
                                             
                                         ))
                                     }

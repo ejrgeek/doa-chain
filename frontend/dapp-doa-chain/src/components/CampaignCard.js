@@ -5,7 +5,7 @@ export default function CampaignCard({ campaign }) {
 
     return (
         <>
-            <div className="neuromorphic-card mx-3" style={{ width: "18rem" }}>
+            <div id={campaign.id} className="neuromorphic-card mx-3" style={{ width: "18rem" }}>
                 <img src={campaign.imageUrl} className="card-img-top" alt="Campaign Image" />
                 <div className="card-body mt-3">
                     <h5 className="card-title">{campaign.title.substring(0, 25)}...</h5>

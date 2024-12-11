@@ -1,18 +1,18 @@
 import HeadNext from "@/components/Head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getCampaignById, donate, login, withdrawDonation } from "@/services/Web3Service";
+import { getCampaignById, donate, login, withdrawDonation, listenToDonationMadeEvent, listenToRefundIssuedEvent } from "@/services/Web3Service";
 import { dateFormatter, ethFormatter } from "@/utils/formatter";
 
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import ConnectButton from "@/components/ConnectButton";
 
 export default function Donate() {
 
     const router = useRouter();
 
-    const {id} = router.query;
+    const { id } = router.query;
 
     const [campaign, setCampaign] = useState({});
 
@@ -22,22 +22,60 @@ export default function Donate() {
 
     const [wallet, setWallet] = useState("");
 
+    const [eventsDonation, setEventsDonation] = useState(new Set());
+    const [eventsRefund, setEventsRefund] = useState(new Set());
+
+    const [eventTrigger, setEventTrigger] = useState(false);
+
+    useEffect(() => {
+        if (id) {
+            listenToDonationMadeEvent((event) => {
+                setEventsDonation(prevEvents => {
+                    const updatedEvents = new Set(prevEvents);
+                    const newEvent = `Donation Made: ${event.returnValues.donor} donated ${ethFormatter(event.returnValues.amount)} TBNB to campaign ID: ${event.returnValues.campaignId}`;
+                    updatedEvents.add(newEvent);
+                    return updatedEvents;
+                });
+            }, id);
+
+            listenToRefundIssuedEvent((event) => {
+                setEventsRefund(prevEvents => {
+                    const updatedEvents = new Set(prevEvents);
+                    const newEvent = `Refund Issued: ${event.returnValues.donor} received ${ethFormatter(event.returnValues.amount)} TBNB refund for campaign ID: ${event.returnValues.campaignId}, timestamp: ${event.returnValues.timestamp}`;
+                    updatedEvents.add(newEvent);
+                    return updatedEvents;
+                });
+            }, id);
+
+        }
+    }, [eventTrigger]);
+
     useEffect(() => {
 
         if (id) {
             setMessage("Loading campaign data ...");
             getCampaignById(id)
-            .then(result => {
-                setMessage("");
-                setCampaign(result);
-            })
-            .catch(error => {
-                console.log(error);
-                setMessage(`Error: ${error.message}`);
-            });
+                .then(result => {
+                    setMessage("");
+                    setCampaign(result);
+                })
+                .catch(error => {
+                    console.log(error);
+                    setMessage(`Error: ${error.message}`);
+                });
         }
 
     }, [id]);
+
+    useEffect(() => {
+        if (id) {
+            getCampaignById(id)
+                .then(result => {
+                    setMessage("");
+                    setCampaign(result);
+                });
+        }
+    }, [eventTrigger]);
 
     function onChangeId(evt) {
         campaign.id = evt.target.value;
@@ -62,7 +100,7 @@ export default function Donate() {
         if (userWallet) {
             setWallet(userWallet);
         }
-    });
+    }, [wallet]);
 
     function btnLoginClick() {
         login()
@@ -78,7 +116,10 @@ export default function Donate() {
         setMessage("Sending donation ...");
 
         donate(campaign.id, donation)
-            .then(tx => setMessage(`Donation sent, ${campaign.authorName} thanks you for your support.`))
+            .then(tx => {
+                setEventTrigger(prev => !prev);
+                setMessage(`Donation sent, ${campaign.authorName} thanks you for your support.`);
+            })
             .catch(error => setMessage(error.message));
     }
 
@@ -86,7 +127,10 @@ export default function Donate() {
         setMessage("Refunding donation ...");
 
         withdrawDonation(campaign.id)
-            .then(tx => setMessage(`Donation refunded, unfortunately ${campaign.authorName} lost a donor, but you got your donated money back.`))
+            .then(tx => {
+                setEventTrigger(prev => !prev);
+                setMessage(`Donation refunded, unfortunately ${campaign.authorName} lost a donor, but you got your donated money back.`);
+            })
             .catch(error => setMessage(error.message));
     }
 
@@ -191,8 +235,8 @@ export default function Donate() {
                                                 <div className="mb-3 col-lg-5">
                                                     <div>
                                                         <p className="lead">If you have made a donation and regret it, you can withdraw your donation using the button below.</p>
-                                                        <p className="lead"><strong className="fw-bold">OBS:</strong> You cannot be refunded if you have made another donation.</p>
-                                                        <button type="button" value="Withdraw Donation" className="btn btn-block btn-neuro" style={{backgroundColor: "orange"}} onClick={btnWithdrawDonationClick}>Withdraw Donation</button>
+                                                        <p className="lead"><strong className="fw-bold">OBS:</strong> You cannot be refunded if you made a donation after it has already been refunded.</p>
+                                                        <button type="button" value="Withdraw Donation" className="btn btn-block btn-neuro" style={{ backgroundColor: "orange" }} onClick={btnWithdrawDonationClick}>Withdraw Donation</button>
                                                     </div>
                                                 </div>
                                             </>
@@ -203,6 +247,7 @@ export default function Donate() {
                             </>
                         )
                 }
+                {/* message */}
                 {
                     !message
                         ?
@@ -210,6 +255,25 @@ export default function Donate() {
                         </>
                         : <div className="mt-3 alert alert-info p-3" role="alert">{message}</div>
                 }
+
+                <div className="mt-4">
+                    <h4>Events Donation:</h4>
+                    <ul>
+                        {Array.from(eventsDonation).map((event, index) => (
+                            <li key={index}>{event}</li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className="mt-4">
+                    <h4>Events Refund:</h4>
+                    <ul>
+                        {Array.from(eventsRefund).map((event, index) => (
+                            <li key={index}>{event}</li>
+                        ))}
+                    </ul>
+                </div>
+
 
             </div>
 

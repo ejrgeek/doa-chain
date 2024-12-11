@@ -27,10 +27,10 @@ contract DoaChain {
 
     address payable theCreator;
 
-    event CampaignCreatedEvent(bytes32 id, string title, address authorWallet);
-    event DonationMadeEvent(bytes32 campaignId, address donor, uint256 amount);
-    event FundsWithdrawnEvent(bytes32 campaignId, address authorWallet, uint256 amount);
-    event RefundIssuedEvent(bytes32 campaignId, address donor, uint256 amount);
+    event CampaignCreatedEvent(bytes32 indexed id, string title, address authorWallet, uint timestamp);
+    event DonationMadeEvent(bytes32 indexed campaignId, uint256 amount, address donor, address authorWallet, uint timestamp);
+    event FundsWithdrawnEvent(bytes32 indexed campaignId, address authorWallet, uint256 amount, uint timestamp);
+    event RefundIssuedEvent(bytes32 indexed campaignId, address donor, uint256 amount, uint timestamp);
 
     modifier isTheCreator() {
         require(msg.sender == theCreator, "You are not allowed");
@@ -101,7 +101,7 @@ contract DoaChain {
         campaigns[idCampaign] = newCampaign;
         campaignIds.push(idCampaign);
 
-        emit CampaignCreatedEvent(idCampaign, title, msg.sender);
+        emit CampaignCreatedEvent(idCampaign, title, msg.sender, block.timestamp);
     }
 
     function donate(bytes32 campaignId) public payable {
@@ -114,7 +114,7 @@ contract DoaChain {
         campaignDonors[campaignId].push(msg.sender);
         refundBalances[campaignId][msg.sender] += msg.value;
 
-        emit DonationMadeEvent(campaignId, msg.sender, msg.value);
+        emit DonationMadeEvent(campaignId, msg.value, msg.sender, campaigns[campaignId].authorWallet, block.timestamp);
     }
 
     function withdrawDonation(bytes32 campaignId) public {
@@ -135,7 +135,7 @@ contract DoaChain {
         (bool success, ) = msg.sender.call{value: refundAmount}("");
         require(success, "Transfer failed");
 
-        emit RefundIssuedEvent(campaignId, msg.sender, refundAmount);
+        emit RefundIssuedEvent(campaignId, msg.sender, refundAmount, block.timestamp);
     }
 
     function withdrawCampaignFunds(bytes32 campaignId) public canWithdraw(campaignId) {
@@ -149,7 +149,7 @@ contract DoaChain {
 
         payable(campaigns[campaignId].authorWallet).transfer(raisedCampaign);
         theCreator.transfer(campaignFee);
-        emit FundsWithdrawnEvent(campaignId, msg.sender, raisedCampaign);
+        emit FundsWithdrawnEvent(campaignId, msg.sender, raisedCampaign, block.timestamp);
     }
 
     function checkActiveCampaign(bytes32 id) private {

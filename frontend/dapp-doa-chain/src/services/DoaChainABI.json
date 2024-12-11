@@ -8,7 +8,7 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
+				"indexed": true,
 				"internalType": "bytes32",
 				"name": "id",
 				"type": "bytes32"
@@ -24,6 +24,12 @@
 				"internalType": "address",
 				"name": "authorWallet",
 				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
 			}
 		],
 		"name": "CampaignCreatedEvent",
@@ -33,10 +39,16 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
+				"indexed": true,
 				"internalType": "bytes32",
 				"name": "campaignId",
 				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
 			},
 			{
 				"indexed": false,
@@ -46,8 +58,14 @@
 			},
 			{
 				"indexed": false,
+				"internalType": "address",
+				"name": "authorWallet",
+				"type": "address"
+			},
+			{
+				"indexed": false,
 				"internalType": "uint256",
-				"name": "amount",
+				"name": "timestamp",
 				"type": "uint256"
 			}
 		],
@@ -58,7 +76,7 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
+				"indexed": true,
 				"internalType": "bytes32",
 				"name": "campaignId",
 				"type": "bytes32"
@@ -74,6 +92,12 @@
 				"internalType": "uint256",
 				"name": "amount",
 				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
 			}
 		],
 		"name": "FundsWithdrawnEvent",
@@ -83,7 +107,7 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
+				"indexed": true,
 				"internalType": "bytes32",
 				"name": "campaignId",
 				"type": "bytes32"
@@ -98,6 +122,12 @@
 				"indexed": false,
 				"internalType": "uint256",
 				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "timestamp",
 				"type": "uint256"
 			}
 		],
@@ -439,19 +469,6 @@
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "campaignId",
-				"type": "bytes32"
-			}
-		],
-		"name": "returnDonation",
-		"outputs": [],
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

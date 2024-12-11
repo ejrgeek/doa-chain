@@ -3,7 +3,7 @@ import ConnectButton from "@/components/ConnectButton";
 import HeadNext from "@/components/Head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { createCampaign, getLastCampaignByAuthor, login } from "@/services/Web3Service";
+import { createCampaign, getLastCampaignByAuthor, login, listenToCampaignCreatedEvent } from "@/services/Web3Service";
 
 
 import { useEffect, useState } from "react";
@@ -24,6 +24,8 @@ export default function Create() {
 
     const [message, setMessage] = useState("");
 
+    const [events, setEvents] = useState([]);
+
     function onInputChange(evt) {
         const { id, value } = evt.target;
         setCampaign((prevState) => ({
@@ -37,7 +39,7 @@ export default function Create() {
         if (userWallet) {
             setWallet(userWallet);
         }
-    });
+    }, []);
 
     function btnLoginClick() {
         login()
@@ -50,7 +52,12 @@ export default function Create() {
 
         createCampaign(campaign)
             .then(tx => getLastCampaignByAuthor())
-            .then(id => setMessage(`Campaign created successfully, save your campaign id <strong>${id}</strong> and share so people can donate!`))
+            .then(id => {
+                listenToCampaignCreatedEvent((event) => {
+                    setEvents((prevEvents) => [...prevEvents, `Campaign Created: ${event.returnValues.title} with ID: ${event.returnValues.id}, timestamp: ${event.returnValues.timestamp}`]);
+                });
+                setMessage(`Campaign created successfully, save your campaign id <strong>${id}</strong> and share so people can donate!`)
+            })
             .catch(err => {
                 console.log(err);
                 setMessage(err.message);
@@ -153,6 +160,15 @@ export default function Create() {
                             </>
                         )
                 }
+
+                <div className="mt-4">
+                    <h4>Events:</h4>
+                    <ul>
+                        {events.map((event, index) => (
+                            <li key={index}>{event}</li>
+                        ))}
+                    </ul>
+                </div>
 
 
 
