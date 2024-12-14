@@ -8,7 +8,7 @@ export default function Header(){
                 <img src="logo.png" className="logo"/>
                 <Link href="/" className="text-info fw-bold h1">DoaChain</Link>
             </div>
-            <div className="nav col=md-3 mb-0 justify-content-center">
+            <div className="nav col-md-3 mb-0 justify-content-center">
                 <h3 className="lead fw-bold" style={{color: "#ffa46f"}}>Using <a style={{color: "#ffa46f"}} href="https://testnet.bscscan.com">BSC Testnet Network</a></h3>
             </div>
             <ul className="nav col-md-6 justify-content-end">
