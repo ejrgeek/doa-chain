@@ -22,10 +22,9 @@ export default function HeadNext({title}) {
                 content="DoaChain is a decentralized donation platform (dApp) built on blockchain, empowering NGOs, individuals, and communities to raise funds with transparency and security."
             />
             {/* OG Cards */}
-            {/* !TODO: SET URL */}
             <meta property="og:type" content="website" />
-            <meta property="og:url" content="SET_URL" />
-            <meta property="og:image" content="https://SET_URL/banner.png" />
+            <meta property="og:url" content="https://doa-chain.vercel.app/" />
+            <meta property="og:image" content="https://doa-chain.vercel.app/banner.png" />
             <meta property="og:locale" content="en_US" />
 
             {/* Twitter Cards */}
@@ -35,7 +34,7 @@ export default function HeadNext({title}) {
                 name="twitter:description"
                 content="DoaChain is a decentralized donation platform (dApp) built on blockchain, empowering NGOs, individuals, and communities to raise funds with transparency and security."
             />
-            <meta name="twitter:image" content="https://SET_URL/banner.png" />
+            <meta name="twitter:image" content="https://doa-chain.vercel.app/banner.png" />
 
 
             <link rel="icon" href="/favicon.ico" />
